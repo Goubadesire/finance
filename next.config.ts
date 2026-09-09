@@ -2,7 +2,7 @@ import type { NextConfig } from 'next'
 import withPWA from 'next-pwa'
 
 const nextConfig: NextConfig = {
-  // Vos configurations Next.js globales ici si besoin
+  turbopack: {},
 }
 
 const pwaConfig = withPWA({
