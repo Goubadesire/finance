@@ -4,6 +4,10 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { authService } from '@/features/auth/services/authService'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { Wallet, ArrowLeft, Loader2, Lock, Mail, User, AlertCircle } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function RegisterPage() {
   const [fullName, setFullName] = useState('')
@@ -20,8 +24,6 @@ export default function RegisterPage() {
 
     try {
       await authService.signUp(email, password, fullName)
-      // Si la confirmation par email n'est pas activée sur Supabase, on redirige vers le dashboard
-      // Sinon, on peut afficher un message demandant de vérifier ses e-mails.
       router.push('/dashboard')
       router.refresh()
     } catch (err: any) {
@@ -32,58 +34,144 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
-        <h2 className="text-center text-2xl font-bold tracking-tight text-gray-900">
-          Créer un compte financier
-        </h2>
-        {error && <div className="rounded bg-red-50 p-3 text-sm text-red-500">{error}</div>}
-        <form className="space-y-6" onSubmit={handleRegister}>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Nom complet</label>
-            <input
-              type="text"
-              required
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className="mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Mot de passe</label>
-            <input
-              type="password"
-              required
-              minLength={6}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-md bg-blue-600 py-2 text-white font-semibold hover:bg-blue-700 disabled:opacity-50"
-          >
-            {loading ? 'Création en cours...' : "S'inscrire"}
-          </button>
-        </form>
-        <p className="text-center text-sm text-gray-600">
-          Déjà un compte ?{' '}
-          <Link href="/login" className="font-medium text-blue-600 hover:underline">
-            Se connecter
-          </Link>
-        </p>
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-between p-4 md:p-6 text-slate-900 selection:bg-blue-500 selection:text-white">
+      {/* Bouton Retour Accueil */}
+      <div className="max-w-7xl w-full mx-auto">
+        <Link 
+          href="/" 
+          className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Retour à l'accueil
+        </Link>
+      </div>
+
+      {/* Carte d'Inscription Animée */}
+      <div className="flex-1 flex items-center justify-center py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="w-full max-w-md"
+        >
+          <Card className="border-slate-200 shadow-xl shadow-slate-200/50 bg-white">
+            <CardHeader className="space-y-3 text-center pb-6">
+              {/* Logo */}
+              <div className="mx-auto h-12 w-12 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+                <Wallet className="w-6 h-6" />
+              </div>
+              <CardTitle className="text-2xl font-bold tracking-tight text-slate-900">
+                Créer un compte
+              </CardTitle>
+              <CardDescription className="text-slate-500 text-sm">
+                Commencez à gérer votre budget efficacement dès aujourd'hui
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent>
+              {/* Message d'erreur */}
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="mb-6 rounded-lg bg-red-50 border border-red-200 p-3.5 text-sm text-red-600 flex items-start gap-3"
+                >
+                  <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                  <span>{error}</span>
+                </motion.div>
+              )}
+
+              <form className="space-y-4" onSubmit={handleRegister}>
+                {/* Champ Nom Complet */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700 block">
+                    Nom complet
+                  </label>
+                  <div className="relative">
+                    <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="text"
+                      required
+                      placeholder="John Doe"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      className="w-full rounded-lg border border-slate-300 bg-white pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all"
+                    />
+                  </div>
+                </div>
+
+                {/* Champ Email */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700 block">
+                    Adresse email
+                  </label>
+                  <div className="relative">
+                    <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="email"
+                      required
+                      placeholder="nom@exemple.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full rounded-lg border border-slate-300 bg-white pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all"
+                    />
+                  </div>
+                </div>
+
+                {/* Champ Mot de passe */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700 block">
+                    Mot de passe
+                  </label>
+                  <div className="relative">
+                    <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="password"
+                      required
+                      minLength={6}
+                      placeholder="6 caractères minimum"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full rounded-lg border border-slate-300 bg-white pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all"
+                    />
+                  </div>
+                </div>
+
+                {/* Bouton de Validation */}
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white h-11 text-base font-medium shadow-md shadow-blue-500/10 transition-all mt-2"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Création du compte...
+                    </>
+                  ) : (
+                    "S'inscrire"
+                  )}
+                </Button>
+              </form>
+
+              {/* Lien vers Connexion */}
+              <div className="mt-6 text-center text-sm text-slate-500">
+                Déjà un compte ?{' '}
+                <Link 
+                  href="/login" 
+                  className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
+                >
+                  Se connecter
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+
+      {/* Footer minimaliste */}
+      <div className="text-center text-xs text-slate-400 py-2">
+        © {new Date().getFullYear()} Finance. Données sécurisées et chiffrées.
       </div>
     </div>
   )
