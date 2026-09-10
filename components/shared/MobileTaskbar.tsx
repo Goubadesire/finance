@@ -6,8 +6,6 @@ import {
   LayoutDashboard,
   ArrowLeftRight,
   PieChart,
-  BarChart3,
-  Settings,
 } from "lucide-react";
 import { useLayoutEffect, useRef, useState } from "react";
 
@@ -27,7 +25,6 @@ const links = [
     href: "/budgets",
     icon: PieChart,
   },
-  
 ];
 
 export function MobileTaskbar() {
@@ -60,9 +57,7 @@ export function MobileTaskbar() {
     update();
 
     const resizeObserver = new ResizeObserver(update);
-
     resizeObserver.observe(el);
-
     window.addEventListener("resize", update);
 
     return () => {
@@ -74,47 +69,12 @@ export function MobileTaskbar() {
   return (
     <nav
       aria-label="Navigation mobile"
-      className="
-        fixed
-        bottom-[calc(1.1rem+env(safe-area-inset-bottom))]
-        left-4
-        right-4
-        z-50
-        md:hidden
-      "
+      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-4 right-4 z-50 md:hidden"
     >
-      <div
-        className="
-          relative
-          flex
-          items-center
-          justify-around
-          gap-1
-          rounded-[28px]
-          bg-[#0B0F14]/95
-          px-2
-          py-2
-          shadow-[0_18px_40px_-12px_rgba(0,0,0,0.55)]
-          backdrop-blur-xl
-          ring-1
-          ring-white/[0.06]
-        "
-      >
-        {/* Indicateur liquide */}
+      <div className="relative flex items-center justify-around gap-1 rounded-full bg-white/85 p-1.5 shadow-lg shadow-gray-900/5 backdrop-blur-xl border border-gray-200/80 ring-1 ring-black/5">
+        {/* Indicateur glissant animé */}
         <span
-          className="
-            absolute
-            top-1.5
-            bottom-1.5
-            rounded-2xl
-            bg-gradient-to-br
-            from-emerald-400
-            to-teal-500
-            shadow-[0_6px_18px_-4px_rgba(16,185,129,0.55)]
-            transition-all
-            duration-300
-            ease-[cubic-bezier(0.34,1.56,0.64,1)]
-          "
+          className="absolute top-1.5 bottom-1.5 rounded-full bg-emerald-50 border border-emerald-100 shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
           style={{
             left: indicator.left,
             width: indicator.width,
@@ -133,50 +93,25 @@ export function MobileTaskbar() {
               ref={(el) => {
                 itemRefs.current[index] = el;
               }}
-              className={`
-                relative
-                z-10
-                flex
-                items-center
-                gap-1.5
-                rounded-2xl
-                px-3
-                py-2.5
-                transition-colors
-                duration-200
-                ${
-                  isActive
-                    ? "text-[#0B0F14]"
-                    : "text-white/50 hover:text-white/80"
-                }
-              `}
+              className={`relative z-10 flex items-center gap-2 rounded-full px-4 py-2.5 transition-all duration-200 active:scale-95 ${
+                isActive
+                  ? "text-emerald-700 font-bold"
+                  : "text-gray-500 hover:text-gray-900 font-medium"
+              }`}
             >
               <Icon
-                className="
-                  h-[19px]
-                  w-[19px]
-                  shrink-0
-                  transition-transform
-                  duration-300
-                "
-                strokeWidth={isActive ? 2.4 : 1.8}
+                className={`h-5 w-5 shrink-0 transition-transform duration-300 ${
+                  isActive ? "scale-110 text-emerald-600" : "text-gray-400"
+                }`}
+                strokeWidth={isActive ? 2.3 : 1.8}
               />
 
               <span
-                className={`
-                  overflow-hidden
-                  whitespace-nowrap
-                  text-[12px]
-                  font-medium
-                  tracking-tight
-                  transition-all
-                  duration-300
-                  ${
-                    isActive
-                      ? "max-w-[100px] opacity-100"
-                      : "max-w-0 opacity-0"
-                  }
-                `}
+                className={`overflow-hidden whitespace-nowrap text-xs tracking-tight transition-all duration-300 ${
+                  isActive
+                    ? "max-w-[100px] opacity-100 ml-0.5"
+                    : "max-w-0 opacity-0"
+                }`}
               >
                 {link.name}
               </span>
