@@ -69,5 +69,16 @@ export const budgetService = {
 
     if (error) throw error
     return data
+  },
+
+  async deleteBudget(id: string) {
+    const supabase = createClient()
+    const { error } = await supabase
+      .from('budgets')
+      .delete()
+      .eq('id', id)
+
+    if (error) throw error
+    return true
   }
 }

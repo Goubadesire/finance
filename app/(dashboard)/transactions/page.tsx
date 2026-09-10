@@ -1,15 +1,32 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { transactionService } from '@/features/transactions/services/transactionService'
 import { Transaction } from '@/features/transactions/types'
 import { AddTransactionModal } from '@/features/transactions/components/AddTransactionModal'
-import { ArrowDownLeft, ArrowUpRight, Receipt } from 'lucide-react'
+import { ArrowDownLeft, ArrowUpRight, Receipt, Trash2, Loader2 } from 'lucide-react'
+
+// Importations Shadcn UI
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [loading, setLoading] = useState(true)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  
+  // État pour la transaction ciblée par la suppression (null = fermée)
+  const [transactionToDelete, setTransactionToDelete] = useState<string | null>(null)
+  
   const [filter, setFilter] = useState<'all' | 'income' | 'expense'>('all')
 
   const loadTransactions = useCallback(async () => {
@@ -26,6 +43,25 @@ export default function TransactionsPage() {
   useEffect(() => {
     loadTransactions()
   }, [loadTransactions])
+
+  // Exécution réelle de la suppression
+  const confirmDelete = async () => {
+    if (!transactionToDelete) return
+
+    const id = transactionToDelete
+    setTransactionToDelete(null) // Ferme la modale
+    setDeletingId(id)
+
+    try {
+      await transactionService.deleteTransaction(id)
+      setTransactions((prev) => prev.filter((tx) => tx.id !== id))
+    } catch (err) {
+      console.error('Erreur lors de la suppression', err)
+      alert('Impossible de supprimer la transaction.')
+    } finally {
+      setDeletingId(null)
+    }
+  }
 
   const filteredTransactions = transactions.filter((tx) => {
     if (filter === 'all') return true
@@ -95,44 +131,88 @@ export default function TransactionsPage() {
         </motion.div>
       ) : (
         <div className="space-y-2.5">
-          {filteredTransactions.map((tx, index) => {
-            const isIncome = tx.type === 'income'
+          <AnimatePresence>
+            {filteredTransactions.map((tx, index) => {
+              const isIncome = tx.type === 'income'
+              const isDeleting = deletingId === tx.id
 
-            return (
-              <motion.div
-                key={tx.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2, delay: index * 0.03 }}
-                className="flex items-center justify-between p-3.5 bg-white rounded-2xl border border-gray-100 shadow-sm"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                    isIncome ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'
-                  }`}>
-                    {isIncome ? <ArrowDownLeft className="w-5 h-5" /> : <ArrowUpRight className="w-5 h-5" />}
+              return (
+                <motion.div
+                  key={tx.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, x: -20, height: 0, marginBottom: 0 }}
+                  transition={{ duration: 0.2, delay: index * 0.02 }}
+                  className="flex items-center justify-between p-3.5 bg-white rounded-2xl border border-gray-100 shadow-sm"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                      isIncome ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'
+                    }`}>
+                      {isIncome ? <ArrowDownLeft className="w-5 h-5" /> : <ArrowUpRight className="w-5 h-5" />}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-sm">
+                        {tx.categories?.name || (isIncome ? 'Revenu' : 'Dépense')}
+                      </h4>
+                      <p className="text-[11px] text-gray-400">
+                        {tx.description || tx.date}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-sm">
-                      {tx.categories?.name || (isIncome ? 'Revenu' : 'Dépense')}
-                    </h4>
-                    <p className="text-[11px] text-gray-400">
-                      {tx.description || tx.date}
-                    </p>
-                  </div>
-                </div>
 
-                <div className="text-right">
-                  <span className={`text-sm font-extrabold ${isIncome ? 'text-emerald-600' : 'text-gray-900'}`}>
-                    {isIncome ? '+' : '-'}{Number(tx.amount).toLocaleString()} €
-                  </span>
-                  <p className="text-[10px] text-gray-400">{tx.date}</p>
-                </div>
-              </motion.div>
-            )
-          })}
+                  <div className="flex items-center space-x-3">
+                    <div className="text-right">
+                      <span className={`text-sm font-extrabold block ${isIncome ? 'text-emerald-600' : 'text-gray-900'}`}>
+                        {isIncome ? '+' : '-'}{Number(tx.amount).toLocaleString()} €
+                      </span>
+                      <p className="text-[10px] text-gray-400">{tx.date}</p>
+                    </div>
+
+                    {/* Bouton qui déclenche l'ouverture de la modale */}
+                    <button
+                      onClick={() => setTransactionToDelete(tx.id)}
+                      disabled={isDeleting}
+                      className="p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all disabled:opacity-50"
+                      title="Supprimer"
+                    >
+                      {isDeleting ? (
+                        <Loader2 className="w-4 h-4 animate-spin text-red-500" />
+                      ) : (
+                        <Trash2 className="w-4 h-4" />
+                      )}
+                    </button>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </AnimatePresence>
         </div>
       )}
+
+      {/* Modale de confirmation Shadcn UI */}
+      <AlertDialog
+        open={!!transactionToDelete}
+        onOpenChange={(open) => !open && setTransactionToDelete(null)}
+      >
+        <AlertDialogContent className="rounded-3xl max-w-[90vw] sm:max-w-lg">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Supprimer la transaction ?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Cette action est irréversible. La transaction sera définitivement retirée de votre historique.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="rounded-xl">Annuler</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmDelete}
+              className="bg-red-600 hover:bg-red-700 text-red-600 rounded-xl"
+            >
+              Supprimer
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

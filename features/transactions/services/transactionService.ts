@@ -52,4 +52,17 @@ export const transactionService = {
     if (error) throw error
     return data
   },
+
+  //supprimer une transaction
+  async deleteTransaction(id: string){
+    const supabase = createClient()
+    const { error } = await supabase
+    .from('transactions')
+    .delete()
+    .eq('id', id)
+
+    if(error){
+      throw error
+    }
+  }
 }
