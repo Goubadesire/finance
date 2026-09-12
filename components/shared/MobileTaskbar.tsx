@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   ArrowLeftRight,
   PieChart,
+  Target
 } from "lucide-react";
 import { useLayoutEffect, useRef, useState } from "react";
 
@@ -24,6 +25,11 @@ const links = [
     name: "Budgets",
     href: "/budgets",
     icon: PieChart,
+  },
+  {
+    name: "Objectifs",
+    href: "/objectifs",
+    icon: Target,
   },
 ];
 

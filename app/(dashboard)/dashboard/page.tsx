@@ -1,9 +1,8 @@
 import { Suspense } from 'react'
 import Link from 'next/link'
-import { PlusCircle, Wallet, ArrowUpRight, ChevronRight } from 'lucide-react'
+import { PlusCircle, Wallet, ArrowUpRight, ChevronRight, Target } from 'lucide-react'
 import { dashboardService } from '@/features/dashboard/services/dashboardService'
-//import DashboardClientContent from './DashboardClientContent'
-import  DashboardClientContent  from "@/features/dashboard/components/DashboardClientContent"
+import DashboardClientContent from "@/features/dashboard/components/DashboardClientContent"
 
 // Forcer le rendu dynamique si les données changent fréquemment
 export const revalidate = 0 
@@ -62,6 +61,22 @@ export default async function DashboardPage() {
           </div>
           <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
             <ArrowUpRight className="w-4 h-4" />
+          </div>
+        </Link>
+
+        <Link 
+          href="/objectifs"
+          className="col-span-2 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between hover:border-emerald-500/50 transition-all active:scale-98 group"
+        >
+          <div>
+            <h3 className="text-xs font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">Objectifs</h3>
+            <p className="text-[10px] text-gray-400 mt-0.5">Vos cagnottes d&apos;épargne</p>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
+              <Target className="w-4 h-4" />
+            </div>
+            <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-emerald-500 transition-colors" />
           </div>
         </Link>
       </div>
