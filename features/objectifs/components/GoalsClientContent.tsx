@@ -91,7 +91,7 @@ export default function GoalsClientContent() {
             const isDeleting = deletingId === goal.id
 
             return (
-              <div key={goal.id} className="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm space-y-3">
+              <div key={goal.id} className="app-surface space-y-4 rounded-3xl p-5 transition-all hover:-translate-y-0.5 hover:border-emerald-200">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <div
@@ -127,9 +127,9 @@ export default function GoalsClientContent() {
                 </div>
 
                 <div>
-                  <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                  <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
                     <div
-                      className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+                      className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 transition-all duration-700"
                       style={{ width: `${pct}%` }}
                     />
                   </div>

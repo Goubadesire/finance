@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
 import { transactionService } from '../services/transactionService'
-import { TransactionType } from '../types'
+import { Category, TransactionType } from '../types'
 import { 
   Dialog, 
   DialogContent, 
@@ -16,7 +16,7 @@ import { Plus } from 'lucide-react'
 
 export function AddTransactionModal({ onTransactionAdded }: { onTransactionAdded: () => void }) {
   const [open, setOpen] = useState(false)
-  const [categories, setCategories] = useState<any[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [type, setType] = useState<TransactionType>('expense')
   const [amount, setAmount] = useState('')
   const [categoryId, setCategoryId] = useState('')
@@ -31,15 +31,11 @@ export function AddTransactionModal({ onTransactionAdded }: { onTransactionAdded
     async function fetchAndFilterCategories() {
       try {
         const data = await transactionService.getCategories()
-        console.log("Données brutes reçues de Supabase :", data)
-        
         if (data) {
           // Filtrer en ignorant les majuscules/minuscules pour être sûr
-          const filtered = data.filter((cat: any) => 
+          const filtered = data.filter((cat: Category) =>
             cat.type?.toLowerCase() === type.toLowerCase()
           )
-          
-          console.log(`Filtré pour le type [${type}] :`, filtered)
           
           setCategories(filtered)
           
@@ -90,24 +86,24 @@ export function AddTransactionModal({ onTransactionAdded }: { onTransactionAdded
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <button className="flex items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all active:scale-95">
+        <button className="group flex items-center space-x-2 rounded-xl bg-violet-600 px-4 py-3 text-xs font-bold text-white shadow-sm shadow-violet-600/15 transition-all hover:bg-violet-700 active:scale-95">
           <Plus className="w-4 h-4" />
-          <span>Ajouter</span>
+          <span>Nouvelle transaction</span>
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] rounded-3xl bg-white p-6">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">Nouvelle transaction</DialogTitle>
+          <DialogTitle className="text-xl font-extrabold tracking-tight">Nouvelle transaction</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-2">
           {/* Sélecteur Type (Revenu / Dépense) */}
-          <div className="flex bg-gray-100 p-1 rounded-xl">
+          <div className="flex rounded-2xl bg-slate-100 p-1.5">
             <button
               type="button"
               onClick={() => setType('expense')}
-              className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
-                type === 'expense' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
+              className={`flex-1 rounded-xl py-2.5 text-xs font-bold transition-all ${
+                type === 'expense' ? 'bg-rose-50 text-rose-700 shadow-sm' : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               Dépense
@@ -115,8 +111,8 @@ export function AddTransactionModal({ onTransactionAdded }: { onTransactionAdded
             <button
               type="button"
               onClick={() => setType('income')}
-              className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
-                type === 'income' ? 'bg-white text-emerald-600 shadow-sm' : 'text-gray-500 hover:text-gray-900'
+              className={`flex-1 rounded-xl py-2.5 text-xs font-bold transition-all ${
+                type === 'income' ? 'bg-emerald-50 text-emerald-700 shadow-sm' : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               Revenu
@@ -124,7 +120,7 @@ export function AddTransactionModal({ onTransactionAdded }: { onTransactionAdded
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-500 mb-1">Montant (€)</label>
+            <label className="mb-1 block text-xs font-bold text-slate-600">Montant (€)</label>
             <input
               type="number"
               step="0.01"
@@ -132,16 +128,16 @@ export function AddTransactionModal({ onTransactionAdded }: { onTransactionAdded
               placeholder="0.00"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 p-3 text-base font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 p-3.5 text-base font-bold focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-400/20"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-500 mb-1">Catégorie</label>
+            <label className="mb-1 block text-xs font-bold text-slate-600">Catégorie</label>
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 p-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 p-3.5 text-sm focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-400/20"
             >
               {categories.length === 0 ? (
                 <option disabled value="">Aucune catégorie disponible pour ce type</option>
@@ -156,24 +152,24 @@ export function AddTransactionModal({ onTransactionAdded }: { onTransactionAdded
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-500 mb-1">Date</label>
+            <label className="mb-1 block text-xs font-bold text-slate-600">Date</label>
             <input
               type="date"
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 p-3.5 text-sm focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-400/20"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-500 mb-1">Description (optionnelle)</label>
+            <label className="mb-1 block text-xs font-bold text-slate-600">Description (optionnelle)</label>
             <input
               type="text"
               placeholder="ex: Salaire, Courses..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 p-3.5 text-sm focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-400/20"
             />
           </div>
 
@@ -181,7 +177,7 @@ export function AddTransactionModal({ onTransactionAdded }: { onTransactionAdded
             <button
               type="submit"
               disabled={loading || categories.length === 0}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-semibold text-sm shadow-sm transition-all disabled:opacity-50"
+              className="w-full rounded-2xl bg-violet-600 py-3.5 text-sm font-bold text-white shadow-lg shadow-violet-600/15 transition-all hover:bg-violet-700 disabled:opacity-50"
             >
               {loading ? 'Enregistrement...' : 'Valider'}
             </button>

@@ -71,7 +71,7 @@ export default function BudgetsPage() {
   const globalPercentage = totalLimit > 0 ? Math.min(Math.round((totalSpent / totalLimit) * 100), 100) : 0
 
   return (
-    <div className="space-y-5 pb-6">
+    <div className="page-enter mx-auto max-w-6xl space-y-7 pb-6">
       {/* En-tête + Sélecteur de mois */}
       <motion.div 
         initial={{ opacity: 0, y: -10 }}
@@ -80,8 +80,9 @@ export default function BudgetsPage() {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-xl font-extrabold tracking-tight text-gray-900">Budgets</h1>
-          <p className="text-xs text-gray-400">Enveloppes de dépenses mensuelles</p>
+          <p className="eyebrow">Maîtrise du quotidien</p>
+          <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-slate-950 md:text-3xl">Budgets</h1>
+          <p className="mt-1 text-sm text-slate-500">Donnez une intention à chaque euro</p>
         </div>
         <AddBudgetModal onBudgetAdded={loadBudgets} />
       </motion.div>

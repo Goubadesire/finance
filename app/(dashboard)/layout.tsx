@@ -18,11 +18,11 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row">
       <Sidebar userEmail={user.email} />
       <div className="flex-1 flex flex-col min-w-0">
         <Header userEmail={user.email} />
-        <main className="flex-1 p-4 md:p-8 pb-24 md:pb-8 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto p-4 pb-24 md:p-10 md:pb-10">
           {children}
         </main>
         <MobileTaskbar />

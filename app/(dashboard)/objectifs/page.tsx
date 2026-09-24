@@ -2,10 +2,11 @@ import GoalsClientContent from '@/features/objectifs/components/GoalsClientConte
 
 export default function ObjectifsPage() {
   return (
-    <div className="space-y-5 pb-6">
+    <div className="page-enter mx-auto max-w-6xl space-y-7 pb-6">
       <div>
-        <h1 className="text-xl font-extrabold tracking-tight text-gray-900">Objectifs</h1>
-        <p className="text-xs text-gray-400">Vos cagnottes et projets d&apos;épargne</p>
+        <p className="eyebrow">Construire demain</p>
+        <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-slate-950 md:text-3xl">Objectifs</h1>
+        <p className="mt-1 text-sm text-slate-500">Vos projets d&apos;épargne, étape par étape</p>
       </div>
 
       <GoalsClientContent />

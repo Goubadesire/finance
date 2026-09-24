@@ -1,203 +1,126 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
-import { 
-  TrendingUp, 
-  ShieldCheck, 
-  PieChart, 
-  ArrowRight, 
-  CheckCircle2, 
-  Wallet, 
-  Zap 
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  CircleDollarSign,
+  LockKeyhole,
+  Sparkles,
+  Target,
+  TrendingUp,
+  WalletCards,
+} from "lucide-react";
+
+const features = [
+  {
+    icon: TrendingUp,
+    title: "Comprendre vos flux",
+    text: "Une lecture claire de vos revenus et dépenses, sans tableur compliqué.",
+  },
+  {
+    icon: Target,
+    title: "Avancer vers vos projets",
+    text: "Transformez vos envies en objectifs concrets et visualisez chaque progrès.",
+  },
+  {
+    icon: LockKeyhole,
+    title: "Garder le contrôle",
+    text: "Vos données restent privées et votre espace est protégé par Supabase.",
+  },
+];
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-blue-500 selection:text-white">
-      
-      {/* --- NAVBAR --- */}
-      <nav className="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold shadow-md shadow-blue-500/20">
-              <Wallet className="w-5 h-5" />
-            </div>
-            <span className="font-bold text-xl tracking-tight text-slate-900">
-              Finance
-            </span>
-          </div>
-          
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-            <a href="#features" className="hover:text-blue-600 transition-colors">Fonctionnalités</a>
-            <a href="#security" className="hover:text-blue-600 transition-colors">Sécurité</a>
-            <a href="#pricing" className="hover:text-blue-600 transition-colors">Tarifs</a>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Link href="/login">
-  <Button variant="ghost" className="text-slate-700 hover:text-slate-900">
-    Connexion
-  </Button>
-</Link>
-            <Link href="/register">
-  <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm">
-    Commencer
-  </Button>
-</Link>
-          </div>
+    <main className="min-h-screen overflow-hidden bg-slate-950 text-white">
+      <nav className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
+        <Link href="/" className="flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-violet-500 text-white shadow-lg shadow-violet-400/20">
+            <WalletCards className="h-5 w-5" />
+          </span>
+          <span className="text-lg font-extrabold tracking-tight">Finance</span>
+        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/login" className="rounded-xl px-4 py-2 text-sm font-semibold text-slate-300 transition hover:text-white">
+            Connexion
+          </Link>
+          <Link href="/register" className="rounded-xl bg-violet-400 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-violet-300">
+            Commencer
+          </Link>
         </div>
       </nav>
 
-      {/* --- HERO SECTION --- */}
-      <section className="relative pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-sm font-medium mb-8"
-          >
-            <Zap className="w-4 h-4 fill-blue-600 text-blue-600" />
-            <span>La nouvelle façon de gérer votre argent</span>
+      <section className="relative mx-auto grid max-w-7xl items-center gap-16 px-6 pb-24 pt-16 lg:grid-cols-[1fr_0.9fr] lg:px-10 lg:pb-32 lg:pt-24">
+        <div className="pointer-events-none absolute -left-40 top-0 h-[32rem] w-[32rem] rounded-full bg-violet-400/15 blur-3xl" />
+        <div className="relative">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-7 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-300/10 px-3 py-1.5 text-xs font-bold text-violet-300">
+            <Sparkles className="h-3.5 w-3.5" />
+            Une relation plus sereine avec votre argent
           </motion.div>
-
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight max-w-4xl mx-auto leading-tight md:leading-tight"
-          >
-            Prenez le contrôle total de vos <span className="text-blue-600">finances</span> en un coup d'œil.
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="max-w-3xl text-5xl font-black leading-[1.02] tracking-[-0.05em] md:text-7xl">
+            Votre argent mérite une <span className="text-violet-300">vue d&apos;ensemble.</span>
           </motion.h1>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-6 text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-normal"
-          >
-            Suivez vos dépenses, analysez vos investissements et atteignez vos objectifs financiers avec une interface simple et puissante.
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }} className="mt-7 max-w-xl text-lg leading-8 text-slate-400">
+            Finance vous aide à suivre vos habitudes, créer de bonnes routines et avancer avec confiance vers ce qui compte vraiment.
           </motion.p>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <Button size="lg" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white h-12 px-8 text-base shadow-lg shadow-blue-500/20">
-              Créer un compte gratuit <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto border-slate-300 text-slate-700 hover:bg-slate-100 h-12 px-8 text-base">
-              Voir la démo
-            </Button>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.24 }} className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Link href="/register" className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-violet-400 px-6 py-4 font-bold text-white shadow-xl shadow-violet-400/10 transition hover:-translate-y-1 hover:bg-violet-300">
+              Créer mon espace <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link href="/login" className="inline-flex items-center justify-center rounded-2xl border border-white/15 px-6 py-4 font-semibold text-slate-200 transition hover:border-violet-300/40 hover:bg-white/5">
+              J&apos;ai déjà un compte
+            </Link>
           </motion.div>
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-xs font-medium text-slate-500">
+            {["Simple à prendre en main", "Sans jargon", "Pensé pour le quotidien"].map((item) => (
+              <span key={item} className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-violet-400" />{item}</span>
+            ))}
+          </div>
+        </div>
 
-          {/* MOCKUP INTERFACE DÉMO */}
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="mt-16 relative max-w-5xl mx-auto"
-          >
-            <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-2xl shadow-slate-200/50">
-              <div className="rounded-xl bg-slate-50 border border-slate-100 p-6 md:p-8 text-left">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                  <Card className="border-slate-200 shadow-sm bg-white">
-                    <CardContent className="p-6">
-                      <p className="text-sm font-medium text-slate-500">Solde Total</p>
-                      <h3 className="text-2xl font-bold text-slate-900 mt-1">€24,850.00</h3>
-                      <p className="text-xs text-emerald-600 font-semibold mt-2 flex items-center gap-1">
-                        <TrendingUp className="w-3.5 h-3.5" /> +12.5% ce mois-ci
-                      </p>
-                    </CardContent>
-                  </Card>
-                  <Card className="border-slate-200 shadow-sm bg-white">
-                    <CardContent className="p-6">
-                      <p className="text-sm font-medium text-slate-500">Revenus</p>
-                      <h3 className="text-2xl font-bold text-slate-900 mt-1">€4,200.00</h3>
-                      <p className="text-xs text-slate-500 mt-2">Dernier virement le 1er du mois</p>
-                    </CardContent>
-                  </Card>
-                  <Card className="border-slate-200 shadow-sm bg-white">
-                    <CardContent className="p-6">
-                      <p className="text-sm font-medium text-slate-500">Dépenses</p>
-                      <h3 className="text-2xl font-bold text-slate-900 mt-1">€1,340.50</h3>
-                      <p className="text-xs text-blue-600 font-semibold mt-2">Sous le budget prévu</p>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                <div className="h-48 rounded-lg bg-blue-50/50 border border-blue-100 flex items-center justify-center text-slate-400 text-sm font-medium border-dashed">
-                  [ Emplacement Graphique Financier Interactive ]
-                </div>
+        <motion.div initial={{ opacity: 0, scale: 0.94, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.7 }} className="relative">
+          <div className="absolute -inset-8 rounded-[3rem] bg-violet-400/10 blur-3xl" />
+          <div className="relative rounded-[2rem] border border-white/10 bg-white/[0.08] p-3 shadow-2xl shadow-black/30 backdrop-blur-xl">
+            <div className="rounded-[1.5rem] bg-slate-900 p-5 md:p-7">
+              <div className="mb-10 flex items-center justify-between">
+                <div><p className="text-xs text-slate-500">Bonjour, votre mois</p><p className="mt-1 font-bold">Vue d&apos;ensemble</p></div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-400 text-white"><CircleDollarSign className="h-5 w-5" /></div>
+              </div>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-violet-300">Solde disponible</p>
+              <p className="mt-2 text-4xl font-black tracking-tight">24 850 €</p>
+              <div className="mt-8 grid grid-cols-2 gap-3">
+                <div className="rounded-2xl bg-white/5 p-4"><p className="text-xs text-slate-500">Revenus</p><p className="mt-2 font-bold text-emerald-300">+4 200 €</p></div>
+                <div className="rounded-2xl bg-white/5 p-4"><p className="text-xs text-slate-500">Dépenses</p><p className="mt-2 font-bold">−1 340 €</p></div>
+              </div>
+              <div className="mt-4 rounded-2xl bg-violet-400 p-4 text-white">
+                <div className="flex items-center justify-between text-xs font-bold"><span>Objectif vacances</span><span>68%</span></div>
+                <div className="mt-3 h-2 rounded-full bg-slate-950/15"><div className="h-full w-[68%] rounded-full bg-slate-950" /></div>
               </div>
             </div>
-          </motion.div>
-
-        </div>
+          </div>
+          <div className="absolute -bottom-5 -left-6 flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-800/90 p-3 shadow-xl backdrop-blur-xl">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-400/15 text-violet-300"><ArrowUpRight className="h-4 w-4" /></span>
+            <div><p className="text-[10px] text-slate-500">Progression</p><p className="text-sm font-bold">+12,5% ce mois</p></div>
+          </div>
+        </motion.div>
       </section>
 
-      {/* --- FEATURES SECTION --- */}
-      <section id="features" className="py-20 bg-white border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold text-slate-900">Tout ce dont vous avez besoin</h2>
-            <p className="mt-4 text-slate-600">Des fonctionnalités pensées pour vous donner une visibilité totale sur votre patrimoine.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FeatureCard 
-              icon={<PieChart className="w-6 h-6 text-blue-600" />}
-              title="Analyse visuelle"
-              description="Visualisez immédiatement la répartition de vos dépenses grâce à des graphiques clairs et personnalisables."
-            />
-            <FeatureCard 
-              icon={<TrendingUp className="w-6 h-6 text-blue-600" />}
-              title="Suivi des objectifs"
-              description="Définissez des objectifs d'épargne et suivez votre progression mois par mois sans effort."
-            />
-            <FeatureCard 
-              icon={<ShieldCheck className="w-6 h-6 text-blue-600" />}
-              title="Sécurité maximale"
-              description="Vos données bancaires sont cryptées et protégées avec les meilleurs standards du marché."
-            />
+      <section className="border-t border-white/10 bg-white py-24 text-slate-950">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="max-w-xl"><p className="eyebrow">Pensé pour durer</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">Une interface qui vous donne envie de revenir.</h2></div>
+          <div className="mt-14 grid gap-5 md:grid-cols-3">
+            {features.map(({ icon: Icon, title, text }, index) => (
+              <motion.div key={title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.08 }} className="rounded-3xl border border-slate-200 bg-slate-50 p-7 transition hover:-translate-y-1 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-900/5">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-100 text-violet-700"><Icon className="h-5 w-5" /></div>
+                <h3 className="mt-7 text-lg font-extrabold">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-500">{text}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
-
-      {/* --- FOOTER --- */}
-      <footer className="border-t border-slate-200 py-12 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-500">
-          <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-md bg-blue-600 flex items-center justify-center text-white font-bold text-xs">
-              F
-            </div>
-            <span className="font-semibold text-slate-900">Finance App</span>
-          </div>
-          <p>© {new Date().getFullYear()} Finance. Tous droits réservés.</p>
-        </div>
-      </footer>
-
-    </div>
-  );
-}
-
-function FeatureCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
-  return (
-    <Card className="border-slate-200 shadow-sm hover:shadow-md transition-shadow bg-slate-50/50">
-      <CardContent className="p-8">
-        <div className="h-12 w-12 rounded-xl bg-blue-100 flex items-center justify-center mb-6">
-          {icon}
-        </div>
-        <h3 className="text-xl font-bold text-slate-900 mb-3">{title}</h3>
-        <p className="text-slate-600 leading-relaxed text-sm">{description}</p>
-      </CardContent>
-    </Card>
+    </main>
   );
 }

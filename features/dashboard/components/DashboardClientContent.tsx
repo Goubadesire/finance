@@ -21,20 +21,20 @@ export default function DashboardClientContent({ summary }: { summary: SummaryDa
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2 }}
-        className={`relative overflow-hidden rounded-3xl p-6 text-white shadow-lg transition-colors ${
+        className={`relative overflow-hidden rounded-[2rem] p-6 text-white shadow-xl shadow-slate-900/10 transition-colors md:p-8 ${
           isNegativeBalance
             ? 'bg-gradient-to-br from-rose-600 via-rose-700 to-red-900'
-            : 'bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-900'
+            : 'bg-gradient-to-br from-violet-700 via-indigo-700 to-slate-950'
         }`}
       >
         <div className="flex justify-between items-center mb-1">
-          <p className="text-xs font-medium uppercase tracking-wider text-white/80">Solde net du mois</p>
+          <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-violet-200">Solde net du mois</p>
           <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded-full text-white/90 backdrop-blur-md">
             Mensuel
           </span>
         </div>
 
-        <h2 className="text-3xl font-black tracking-tight mb-6">
+        <h2 className="mb-7 text-4xl font-black tracking-tight md:text-5xl">
           {summary.netBalance.toLocaleString('fr-FR')} €
         </h2>
 
@@ -64,8 +64,11 @@ export default function DashboardClientContent({ summary }: { summary: SummaryDa
       {/* Derniers mouvements */}
       <div className="space-y-3">
         <div className="flex justify-between items-center">
-          <h3 className="text-sm font-bold text-gray-900">Derniers mouvements</h3>
-          <Link href="/transactions" className="text-xs font-semibold text-emerald-600 flex items-center hover:underline">
+          <div>
+            <p className="eyebrow">Activité récente</p>
+            <h3 className="mt-1 text-lg font-extrabold tracking-tight text-slate-950">Derniers mouvements</h3>
+          </div>
+          <Link href="/transactions" className="flex items-center text-xs font-semibold text-violet-600 hover:underline">
             Voir tout <ChevronRight className="w-3.5 h-3.5 ml-0.5" />
           </Link>
         </div>
@@ -81,11 +84,11 @@ export default function DashboardClientContent({ summary }: { summary: SummaryDa
               return (
                 <div
                   key={tx.id}
-                  className="flex items-center justify-between p-3.5 bg-white rounded-2xl border border-gray-100 shadow-sm"
+                  className="app-surface flex items-center justify-between rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:border-emerald-200"
                 >
                   <div className="flex items-center space-x-3">
                     <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
-                      isIncome ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'
+                      isIncome ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
                     }`}>
                       {isIncome ? <ArrowDownLeft className="w-4 h-4" /> : <ArrowUpRight className="w-4 h-4" />}
                     </div>

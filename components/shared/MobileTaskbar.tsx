@@ -77,10 +77,10 @@ export function MobileTaskbar() {
       aria-label="Navigation mobile"
       className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-4 right-4 z-50 md:hidden"
     >
-      <div className="relative flex items-center justify-around gap-1 rounded-full bg-white/85 p-1.5 shadow-lg shadow-gray-900/5 backdrop-blur-xl border border-gray-200/80 ring-1 ring-black/5">
+      <div className="relative flex items-center justify-around gap-1 rounded-[1.35rem] border border-white/80 bg-white/95 p-1.5 shadow-2xl shadow-slate-900/15 backdrop-blur-xl">
         {/* Indicateur glissant animé */}
         <span
-          className="absolute top-1.5 bottom-1.5 rounded-full bg-emerald-50 border border-emerald-100 shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+          className="absolute bottom-1.5 top-1.5 rounded-xl bg-violet-100 shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
           style={{
             left: indicator.left,
             width: indicator.width,
@@ -101,13 +101,13 @@ export function MobileTaskbar() {
               }}
               className={`relative z-10 flex items-center gap-2 rounded-full px-4 py-2.5 transition-all duration-200 active:scale-95 ${
                 isActive
-                  ? "text-emerald-700 font-bold"
-                  : "text-gray-500 hover:text-gray-900 font-medium"
+                  ? "font-bold text-violet-800"
+                  : "font-medium text-slate-400 hover:text-slate-900"
               }`}
             >
               <Icon
                 className={`h-5 w-5 shrink-0 transition-transform duration-300 ${
-                  isActive ? "scale-110 text-emerald-600" : "text-gray-400"
+                  isActive                                     ? "scale-110 text-violet-600" : "text-slate-400"
                 }`}
                 strokeWidth={isActive ? 2.3 : 1.8}
               />

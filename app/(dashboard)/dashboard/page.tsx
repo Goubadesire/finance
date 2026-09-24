@@ -15,16 +15,17 @@ export default async function DashboardPage() {
   const summaryPromise = dashboardService.getDashboardSummary(currentMonth)
 
   return (
-    <div className="space-y-6 pb-6">
+    <div className="mx-auto max-w-6xl space-y-8 pb-6">
       {/* En-tête statique rendu immédiatement */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-extrabold tracking-tight text-gray-900">Tableau de bord</h1>
-          <p className="text-xs text-gray-400 capitalize">{formattedDate}</p>
+          <p className="eyebrow">Votre espace financier</p>
+          <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-slate-950 md:text-3xl">Tableau de bord</h1>
+          <p className="mt-1 text-sm capitalize text-slate-500">{formattedDate}</p>
         </div>
         <Link
           href="/transactions"
-          className="flex items-center space-x-1.5 bg-emerald-600 text-white px-3.5 py-2 rounded-2xl text-xs font-semibold shadow-sm hover:bg-emerald-700 transition-all active:scale-95"
+          className="flex items-center space-x-2 rounded-2xl bg-violet-600 px-4 py-3 text-xs font-bold text-white shadow-lg shadow-violet-600/20 transition-all hover:bg-violet-700 active:scale-95"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Transaction</span>
@@ -37,13 +38,13 @@ export default async function DashboardPage() {
       </Suspense>
 
       {/* Raccourcis statiques */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Link 
           href="/budgets"
-          className="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between hover:border-emerald-500/50 transition-all active:scale-98 group"
+          className="app-surface flex items-center justify-between rounded-3xl p-5 transition-all hover:-translate-y-0.5 hover:border-violet-300 group"
         >
           <div>
-            <h3 className="text-xs font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">Budgets</h3>
+            <h3 className="text-xs font-bold text-gray-900 group-hover:text-violet-600 transition-colors">Budgets</h3>
             <p className="text-[10px] text-gray-400 mt-0.5">Suivi des enveloppes</p>
           </div>
           <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
@@ -53,10 +54,10 @@ export default async function DashboardPage() {
 
         <Link 
           href="/transactions"
-          className="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between hover:border-emerald-500/50 transition-all active:scale-98 group"
+          className="app-surface flex items-center justify-between rounded-3xl p-5 transition-all hover:-translate-y-0.5 hover:border-violet-300 group"
         >
           <div>
-            <h3 className="text-xs font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">Transactions</h3>
+            <h3 className="text-xs font-bold text-gray-900 group-hover:text-violet-600 transition-colors">Transactions</h3>
             <p className="text-[10px] text-gray-400 mt-0.5">Historique complet</p>
           </div>
           <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
@@ -66,10 +67,10 @@ export default async function DashboardPage() {
 
         <Link 
           href="/objectifs"
-          className="col-span-2 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between hover:border-emerald-500/50 transition-all active:scale-98 group"
+          className="app-surface flex items-center justify-between rounded-3xl p-5 transition-all hover:-translate-y-0.5 hover:border-violet-300 group sm:col-span-2"
         >
           <div>
-            <h3 className="text-xs font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">Objectifs</h3>
+            <h3 className="text-xs font-bold text-gray-900 group-hover:text-violet-600 transition-colors">Objectifs</h3>
             <p className="text-[10px] text-gray-400 mt-0.5">Vos cagnottes d&apos;épargne</p>
           </div>
           <div className="flex items-center space-x-2">

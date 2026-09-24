@@ -64,16 +64,16 @@ export default function TransactionsClientContent({
 
   return (
     <>
-      <div className="flex justify-end -mt-12 mb-4">
+      <div className="flex justify-end -mt-14 mb-4">
         <AddTransactionModal onTransactionAdded={handleRefresh} />
       </div>
 
       {/* Filtres rapides */}
-      <div className="flex bg-gray-200/60 p-1 rounded-2xl">
+      <div className="app-surface flex rounded-2xl p-1.5">
         <button
           onClick={() => setFilter('all')}
           className={`flex-1 py-1.5 text-xs font-semibold rounded-xl transition-all ${
-            filter === 'all' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'
+            filter === 'all' ? 'bg-violet-600 text-white shadow-sm' : 'text-slate-500 hover:text-slate-950'
           }`}
         >
           Toutes
@@ -81,7 +81,7 @@ export default function TransactionsClientContent({
         <button
           onClick={() => setFilter('expense')}
           className={`flex-1 py-1.5 text-xs font-semibold rounded-xl transition-all ${
-            filter === 'expense' ? 'bg-white text-red-600 shadow-sm' : 'text-gray-500 hover:text-gray-900'
+            filter === 'expense' ? 'bg-rose-50 text-rose-700 shadow-sm' : 'text-slate-500 hover:text-slate-950'
           }`}
         >
           Dépenses
@@ -89,7 +89,7 @@ export default function TransactionsClientContent({
         <button
           onClick={() => setFilter('income')}
           className={`flex-1 py-1.5 text-xs font-semibold rounded-xl transition-all ${
-            filter === 'income' ? 'bg-white text-emerald-600 shadow-sm' : 'text-gray-500 hover:text-gray-900'
+            filter === 'income' ? 'bg-emerald-50 text-emerald-700 shadow-sm' : 'text-slate-500 hover:text-slate-950'
           }`}
         >
           Revenus
@@ -111,7 +111,7 @@ export default function TransactionsClientContent({
             return (
               <div
                 key={tx.id}
-                className="flex items-center justify-between p-3.5 bg-white rounded-2xl border border-gray-100 shadow-sm"
+                className="app-surface flex items-center justify-between rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:border-emerald-200"
               >
                 <div className="flex items-center space-x-3">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${

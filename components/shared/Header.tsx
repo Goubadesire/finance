@@ -11,16 +11,16 @@ export function Header({ userEmail, userName }: HeaderProps) {
   const displayName = userName || userEmail?.split('@')[0] || 'Utilisateur'
 
   return (
-    <header className="sticky top-0 backdrop-blur-md bg-white/80 border-b border-gray-100 px-4 py-3.5 flex items-center justify-between md:hidden z-40 transition-all">
+    <header className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200/70 bg-white/75 px-4 py-4 backdrop-blur-xl md:hidden">
       <div className="flex items-center space-x-2.5">
-        <div className="w-9 h-9 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-sm">
+        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 shadow-sm">
           <WalletCards className="w-5 h-5" />
         </div>
         <div>
-          <h1 className="text-sm font-bold text-gray-900 tracking-tight">
+          <h1 className="text-sm font-extrabold tracking-tight text-slate-950">
             Bonjour
           </h1>
-          <span className="text-[10px] font-medium text-emerald-600">{displayName} 👋</span>
+          <span className="text-[10px] font-semibold text-emerald-700">{displayName} 👋</span>
         </div>
       </div>
 
